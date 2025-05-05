@@ -1,0 +1,33 @@
+name: Java CI
+
+# Esegui il workflow su ogni push o pull request al ramo principale o develop
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build:
+    # Specifica l'ambiente Linux
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout del codice sorgente
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # 2. Imposta Java nella versione appropriata
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # 3. Esegui Gradle
+      - name: Build with Gradle
+        run: ./gradlew clean build
